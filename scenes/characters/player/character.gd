@@ -81,4 +81,5 @@ func _input(event):
 	# Mouse in viewport coordinates.
 	if event is InputEventMouseButton:
 #		print("Mouse Click/Unclick at: ", get_global_mouse_position())
-		goal = get_global_mouse_position()
+		if event.button_index == 2: # rmb
+			goal = get_global_mouse_position()
