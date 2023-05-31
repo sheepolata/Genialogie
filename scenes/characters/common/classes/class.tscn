@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://clyproj4xfa1n"]
+
+[ext_resource type="Script" path="res://scenes/characters/common/classes/class.gd" id="1_cbmot"]
+
+[node name="class" type="Node2D"]
+script = ExtResource("1_cbmot")

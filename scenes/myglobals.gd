@@ -13,3 +13,9 @@ enum ABILITY {
 	CONSTITUTION,
 	SPEED
 }
+
+enum TEAM {
+	PLAYER,
+	ALLY,
+	ENEMY
+}

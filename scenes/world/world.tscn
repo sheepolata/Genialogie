@@ -1,10 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1443mg7a6gd4"]
+[gd_scene load_steps=6 format=3 uid="uid://b1443mg7a6gd4"]
 
 [ext_resource type="Script" path="res://scenes/world/Camera2D.gd" id="1_j6d3u"]
+[ext_resource type="Script" path="res://scenes/world/world.gd" id="1_jotma"]
 [ext_resource type="Script" path="res://scenes/characters/player/Team.gd" id="1_le42e"]
-[ext_resource type="PackedScene" uid="uid://blnwxhwti41qb" path="res://scenes/characters/player/character.tscn" id="1_rywyq"]
+[ext_resource type="PackedScene" uid="uid://tcqbjxnem8rw" path="res://scenes/world/PH_floor.tscn" id="1_qlfpy"]
+[ext_resource type="PackedScene" uid="uid://bo4obefxrk1dl" path="res://scenes/characters/player/villager_char.tscn" id="4_dcocg"]
 
 [node name="World" type="Node2D"]
+script = ExtResource("1_jotma")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ParallaxBackground" parent="CanvasLayer" instance=ExtResource("1_qlfpy")]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Cards" type="VBoxContainer" parent="CanvasLayer/UI"]
+layout_mode = 0
+scale = Vector2(0.6, 0.6)
+theme_override_constants/separation = 218
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
 script = ExtResource("1_j6d3u")
@@ -13,4 +29,8 @@ follow = NodePath("../Team")
 [node name="Team" type="Node2D" parent="."]
 script = ExtResource("1_le42e")
 
-[node name="Character" parent="Team" instance=ExtResource("1_rywyq")]
+[node name="villager_char" parent="Team" instance=ExtResource("4_dcocg")]
+
+[node name="villager_char2" parent="Team" instance=ExtResource("4_dcocg")]
+position = Vector2(44, -3)
+character_name = "Jane Doe"

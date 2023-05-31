@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://tcqbjxnem8rw"]
+
+[ext_resource type="Texture2D" uid="uid://coa15v7vcdfus" path="res://assets/placeholders/tileable-img_0062.png" id="1_a4j1g"]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(2048, 1024)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+scale = Vector2(2, 1)
+texture = ExtResource("1_a4j1g")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 1024)

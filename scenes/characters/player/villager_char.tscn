@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo4obefxrk1dl"]
+
+[ext_resource type="PackedScene" uid="uid://cl0konhm6noca" path="res://scenes/characters/common/character.tscn" id="1_mnpjk"]
+[ext_resource type="PackedScene" uid="uid://b7hdaycnvoe2s" path="res://scenes/characters/common/classes/villager_class.tscn" id="2_u2fng"]
+[ext_resource type="PackedScene" uid="uid://bj44v6k43inju" path="res://scenes/characters/common/stats.tscn" id="3_a7rt5"]
+[ext_resource type="Script" path="res://scenes/characters/player/playerstats.gd" id="95_wjcjd"]
+
+[node name="villager_char" instance=ExtResource("1_mnpjk")]
+
+[node name="class" parent="." index="2" instance=ExtResource("2_u2fng")]
+
+[node name="stats" parent="." index="3" instance=ExtResource("3_a7rt5")]
+script = ExtResource("95_wjcjd")
+STRENGTH_GROWTH = 0.3
+DEXTERITY_GROWTH = 0.3
+CONSTITUTION_GROWTH = 0.3
+SPEED_GROWTH = 0.3

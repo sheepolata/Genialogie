@@ -18,7 +18,6 @@ func _process(delta):
 func _input(event):
 	# Mouse in viewport coordinates.
 	if event is InputEventMouseButton:
-		print(event.button_index)
 		if event.button_index == 4: # wheel up
 			zoom = Vector2(clamp(zoom.x + zoom_step, zoom_in_max, zoom_out_max),
 							 clamp(zoom.y + zoom_step, zoom_in_max, zoom_out_max))

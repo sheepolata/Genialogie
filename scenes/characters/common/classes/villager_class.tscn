@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7hdaycnvoe2s"]
+
+[ext_resource type="Script" path="res://scenes/characters/common/classes/class.gd" id="1_erh2p"]
+
+[node name="class" type="Node2D"]
+script = ExtResource("1_erh2p")
+class_name_ = "Villager"
+BASE_HP = 5
+STRENGTH_GROWTH = 0.1
+DEXTERITY_GROWTH = -0.2
+CONSTITUTION_GROWTH = 0.2
+SPEED_GROWTH = -0.1
+FLAT_ATTACK_BONUS_PER_LEVEL = 0.1
+FLAT_DAMAGE_BONUS_PER_LEVEL = 0.5
+FLAT_DEFENCE_BONUS_PER_LEVEL = 0.3
+metadata/_edit_pinned_properties_ = [&"BASE_HP", &"STRENGTH_GROWTH", &"DEXTERITY_GROWTH", &"CONSTITUTION_GROWTH", &"SPEED_GROWTH", &"FLAT_ATTACK_BONUS_PER_LEVEL", &"FLAT_DAMAGE_BONUS_PER_LEVEL", &"FLAT_DEFENCE_BONUS_PER_LEVEL", &"class_name_"]
