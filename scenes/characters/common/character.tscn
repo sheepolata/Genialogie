@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=3 uid="uid://cl0konhm6noca"]
+[gd_scene load_steps=100 format=3 uid="uid://cl0konhm6noca"]
 
 [ext_resource type="Script" path="res://scenes/characters/common/character.gd" id="1_1pe8t"]
 [ext_resource type="Texture2D" uid="uid://myy4x0darc04" path="res://assets/sprites/default_character/down_die/Down Die Character 1 01.png" id="2_20yug"]
@@ -94,6 +94,7 @@
 [ext_resource type="Texture2D" uid="uid://bugqs3u6vn63e" path="res://assets/sprites/default_character/up_run/Up Run Character 1 08.png" id="92_3xgnf"]
 [ext_resource type="Texture2D" uid="uid://60qb2xb13lnv" path="res://assets/sprites/default_character/up_run/Up Run Character 1 09.png" id="93_aeu1l"]
 [ext_resource type="Texture2D" uid="uid://byee7b77r5oiw" path="res://assets/sprites/default_character/up_run/Up Run Character 1 10.png" id="94_32aoc"]
+[ext_resource type="Script" path="res://scenes/characters/common/AvoidArea.gd" id="95_6snsr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_owu3a"]
 animations = [{
@@ -441,6 +442,12 @@ animations = [{
 radius = 43.0
 height = 116.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_2xt4o"]
+radius = 100.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_5rf3f"]
+font_size = 50
+
 [node name="character" type="CharacterBody2D"]
 scale = Vector2(0.25, 0.25)
 script = ExtResource("1_1pe8t")
@@ -451,3 +458,52 @@ animation = &"up_die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_sscrd")
+
+[node name="AvoidArea" type="Area2D" parent="."]
+script = ExtResource("95_6snsr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AvoidArea"]
+shape = SubResource("CircleShape2D_2xt4o")
+
+[node name="UIDebug" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Debug" type="Label" parent="UIDebug"]
+layout_mode = 0
+offset_left = -533.0
+offset_top = -288.0
+offset_right = 532.0
+offset_bottom = -144.0
+label_settings = SubResource("LabelSettings_5rf3f")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="StateLabel" type="Label" parent="UIDebug"]
+layout_mode = 0
+offset_left = -252.0
+offset_top = -376.0
+offset_right = 251.0
+offset_bottom = -270.0
+text = "STATE STRING"
+label_settings = SubResource("LabelSettings_5rf3f")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="AvoidTimer" type="Timer" parent="Timers"]
+wait_time = 2.0
+
+[node name="ResetAvoidTimer" type="Timer" parent="Timers"]
+wait_time = 5.0
+autostart = true
+
+[connection signal="area_entered" from="AvoidArea" to="AvoidArea" method="_on_area_entered"]
+[connection signal="area_exited" from="AvoidArea" to="AvoidArea" method="_on_area_exited"]
+[connection signal="timeout" from="Timers/AvoidTimer" to="." method="_on_avoid_timer_timeout"]
+[connection signal="timeout" from="Timers/ResetAvoidTimer" to="." method="_on_reset_avoid_timer_timeout"]

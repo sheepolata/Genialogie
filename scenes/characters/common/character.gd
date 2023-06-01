@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Character
+
 var growth_range = [-1 , 1]
 
 @export var character_name : String = "John Doe"
@@ -11,17 +13,29 @@ var growth_range = [-1 , 1]
 @onready var _stats = $stats
 @onready var _class = $class
 
+@onready var _avoid_timer = $Timers/AvoidTimer
+var no_avoid_forced = false
+
 var goal : Vector2 = Vector2.ZERO : set = set_goal
-var goal_reached = false
+var goal_reached = true
 
 var current_hp : float = 0
 
 var my_ui = preload("res://scenes/world/UI/character_card.tscn")
 var rng = RandomNumberGenerator.new()
 
+var avoid_direction : Vector2 = Vector2.ZERO
+
 enum STATE {
 	goto,
+	avoid_only,
 	idle
+}
+
+var STATE_STR = {
+	STATE.goto : "GOTO",
+	STATE.avoid_only : "AVOID_ONLY",
+	STATE.idle : "IDLE"
 }
 
 var state = STATE.idle
@@ -32,6 +46,8 @@ var b_call_once = false
 func _ready():
 	_stats.MAX_HP = _class.BASE_HP + ability_score(MyGlobals.ABILITY.CONSTITUTION)
 	current_hp = max_hp()
+	
+	$Timers/ResetAvoidTimer.start()
 
 func call_once():
 	var world_ui_cards = get_parent().get_parent().UICards
@@ -42,13 +58,22 @@ func call_once():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	$UIDebug/Debug.text = ""
+	$UIDebug/StateLabel.text = STATE_STR[state]
+	
 	if !b_call_once:
 		call_once()
 		b_call_once = true
-		
+	
+#	$UIDebug/Debug.text += str(avoid_direction) + "\n"
+#	$UIDebug/Debug.text += str(global_position) + "\n"
+	$UIDebug/Debug.text += str(no_avoid_forced) + "\n"
+	
 	act()
+	avoid()
 	set_animation()
 	move_and_slide()
+	queue_redraw()
 
 func level_up():
 	_stats.LEVEL += 1
@@ -89,11 +114,6 @@ func level_up():
 
 func max_hp():
 	return _stats.MAX_HP
-#	var con = ability_score(MyGlobals.ABILITY.CONSTITUTION)
-#	return ( 
-#		(_class.BASE_HP * _stats.LEVEL)
-#		+ (_stats.LEVEL * con) 
-#	)
 
 func attack_score():
 	var ability = MyGlobals.ABILITY.STRENGTH # Will be defined by weapon 
@@ -112,7 +132,7 @@ func damage_score():
 func defence_score():
 	var dex = ability_score(MyGlobals.ABILITY.DEXTERITY)
 	var spd = ability_score(MyGlobals.ABILITY.SPEED)
-	return max(0, 10 + floor(dex + (spd / 2)))
+	return max(0, floor(10 + (_class.FLAT_DEFENCE_BONUS_PER_LEVEL * _stats.LEVEL) + floor(dex + (spd / 2))))
 
 func strength():
 	return _stats.abilities[MyGlobals.ABILITY.STRENGTH]
@@ -130,7 +150,6 @@ func ability_score(ab):
 	return _stats.ability_score(ab)
 
 func growth_diminishing_return():
-	print(_stats.LEVEL, max(0, ((_stats.LEVEL - 20)) * 0.01))
 	return max(0, ((_stats.LEVEL - 20)) * 0.01)
 
 func strength_growth():
@@ -165,7 +184,6 @@ func speed_growth():
 		, growth_range[0], growth_range[1]
 	)
 
-
 func act():
 	if !goal_reached:
 		state = STATE.goto
@@ -175,15 +193,37 @@ func act():
 
 func go_to_position():
 	var dist = goal.distance_to(position)
-	if dist <= 25:
+	if dist <= $AvoidArea/CollisionShape2D.shape.radius * scale.x:
 		velocity = Vector2.ZERO
 		goal_reached = true
 	else:
 		var direction = (goal - position).normalized()
-		velocity = direction * _stats.walking_speed()
+		velocity = (direction + avoid_direction).normalized() * _stats.walking_speed()
+
+func avoid():
+#	velocity = avoid_direction * _stats.walking_speed()
+	if state == STATE.goto:
+		return
+	if no_avoid_forced:
+		velocity = Vector2.ZERO
+		return
+	
+	if avoid_direction != Vector2.ZERO:
+#		print(avoid_direction)
+		velocity = avoid_direction * _stats.walking_speed()
+		state = STATE.avoid_only
+		if _avoid_timer.is_stopped():
+			_avoid_timer.start()
+			no_avoid_forced = false
+	else:
+		if not _avoid_timer.is_stopped():
+			_avoid_timer.stop()
+		velocity = Vector2.ZERO
+		state = STATE.idle
 
 func set_animation():
-	var diff = goal - position
+#	var diff = goal - position
+	var diff = velocity
 	var vec
 	if abs(diff.x) > abs(diff.y):
 		vec = Vector2(sign(diff.x), 0)
@@ -203,8 +243,11 @@ func set_animation():
 			is_left = true
 			dir = "side"
 	_animated_sprite.flip_h = is_left
+	
 	match (state):
 		STATE.goto:
+			_animated_sprite.play(dir+"_run")
+		STATE.avoid_only:
 			_animated_sprite.play(dir+"_run")
 		STATE.idle:
 			_animated_sprite.play(dir+"_idle")
@@ -218,7 +261,25 @@ func _input(event):
 	if event is InputEventMouseButton:
 #		print("Mouse Click/Unclick at: ", get_global_mouse_position())
 		if event.button_index == 2: # rmb
-			goal = get_global_mouse_position()
+#			goal = get_global_mouse_position()
+			goal = get_goal_from_mouse_clic()
 	elif event is InputEventKey:
 		if event.is_pressed() and event.key_label == KEY_U:
 			level_up()
+
+func get_goal_from_mouse_clic():
+	var mp = get_global_mouse_position()
+	var relative_pos = position - get_parent().team_center_position
+	
+	return (mp + relative_pos*.75)
+
+func _on_avoid_timer_timeout():
+	no_avoid_forced = true
+	
+func _on_reset_avoid_timer_timeout():
+	no_avoid_forced = false
+	
+func _draw():
+	var goal_size = Vector2(50.0, 50.0)
+	draw_rect(Rect2(to_local(goal - (goal_size*scale/2)), goal_size), Color.RED)
+	draw_line(to_local(position), to_local(goal), Color.RED)

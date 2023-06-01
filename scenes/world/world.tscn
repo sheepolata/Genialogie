@@ -30,7 +30,12 @@ follow = NodePath("../Team")
 script = ExtResource("1_le42e")
 
 [node name="villager_char" parent="Team" instance=ExtResource("4_dcocg")]
+position = Vector2(-80, -6)
 
 [node name="villager_char2" parent="Team" instance=ExtResource("4_dcocg")]
-position = Vector2(44, -3)
+position = Vector2(95, -2)
 character_name = "Jane Doe"
+
+[node name="villager_char3" parent="Team" instance=ExtResource("4_dcocg")]
+position = Vector2(-2, 96)
+character_name = "Jack Doe"
