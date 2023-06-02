@@ -1,15 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbt82bu8knnla"]
+[gd_scene load_steps=11 format=3 uid="uid://dbt82bu8knnla"]
 
 [ext_resource type="Script" path="res://scenes/world/UI/character_card.gd" id="1_77nke"]
 [ext_resource type="Texture2D" uid="uid://cgr1j8m036jvd" path="res://assets/HUD/Inset_Grey.png" id="1_d5nix"]
 [ext_resource type="Texture2D" uid="uid://btau2smtilkvs" path="res://assets/HUD/Health_Back.png" id="2_82psl"]
 [ext_resource type="Texture2D" uid="uid://d24db5w2jk0xv" path="res://assets/HUD/Health_Front.png" id="3_oil3g"]
+[ext_resource type="PackedScene" uid="uid://c3udtwudjk35w" path="res://scenes/world/UI/weapon_card.tscn" id="5_41mhb"]
+[ext_resource type="PackedScene" uid="uid://v448sh8fvlpg" path="res://scenes/world/UI/armor_card.tscn" id="6_3mhoh"]
+[ext_resource type="PackedScene" uid="uid://dvc68j6bo0nh6" path="res://scenes/world/UI/accessory_card.tscn" id="7_s2xmc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_t8afs"]
 font_size = 20
 
 [sub_resource type="LabelSettings" id="LabelSettings_7gr3b"]
 font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_f8lcp"]
+font_size = 17
 
 [node name="character_card" type="Control"]
 layout_mode = 3
@@ -204,10 +210,10 @@ vertical_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="Class"]
 layout_mode = 0
-offset_left = 264.0
-offset_top = 145.0
-offset_right = 450.0
-offset_bottom = 201.0
+offset_left = 263.0
+offset_top = 160.0
+offset_right = 449.0
+offset_bottom = 216.0
 columns = 3
 
 [node name="AttackLabel" type="Label" parent="Class/GridContainer"]
@@ -246,3 +252,75 @@ layout_mode = 2
 text = "99"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Equipment" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Equipment"]
+layout_mode = 0
+offset_left = 227.0
+offset_top = 129.0
+offset_right = 481.0
+offset_bottom = 169.0
+alignment = 1
+
+[node name="Weapon" type="Label" parent="Equipment/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+text = "WEAPON"
+label_settings = SubResource("LabelSettings_f8lcp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Armor" type="Label" parent="Equipment/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+text = "ARMOR"
+label_settings = SubResource("LabelSettings_f8lcp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Accessory" type="Label" parent="Equipment/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+text = "ACCESSORY"
+label_settings = SubResource("LabelSettings_f8lcp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemsCards" type="Control" parent="Equipment"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="weapon_card" parent="Equipment/ItemsCards" instance=ExtResource("5_41mhb")]
+visible = false
+z_index = 1
+layout_mode = 1
+offset_left = 491.0
+offset_top = -1.0
+offset_right = 491.0
+offset_bottom = -1.0
+
+[node name="armor_card" parent="Equipment/ItemsCards" instance=ExtResource("6_3mhoh")]
+visible = false
+z_index = 1
+layout_mode = 1
+offset_left = 491.0
+offset_right = 491.0
+
+[node name="accessory_card" parent="Equipment/ItemsCards" instance=ExtResource("7_s2xmc")]
+visible = false
+z_index = 1
+layout_mode = 1
+offset_left = 492.0
+offset_right = 492.0
+
+[connection signal="mouse_entered" from="Equipment/HBoxContainer/Weapon" to="." method="_on_weapon_mouse_entered"]
+[connection signal="mouse_exited" from="Equipment/HBoxContainer/Weapon" to="." method="_on_weapon_mouse_exited"]
+[connection signal="mouse_entered" from="Equipment/HBoxContainer/Armor" to="." method="_on_armor_mouse_entered"]
+[connection signal="mouse_exited" from="Equipment/HBoxContainer/Armor" to="." method="_on_armor_mouse_exited"]
+[connection signal="mouse_entered" from="Equipment/HBoxContainer/Accessory" to="." method="_on_accessory_mouse_entered"]
+[connection signal="mouse_exited" from="Equipment/HBoxContainer/Accessory" to="." method="_on_accessory_mouse_exited"]

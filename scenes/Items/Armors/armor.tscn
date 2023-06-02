@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bx3gwmexgek4v"]
+
+[ext_resource type="Script" path="res://scenes/Items/Armors/armor.gd" id="1_yri37"]
+
+[node name="armor" type="Node2D"]
+script = ExtResource("1_yri37")

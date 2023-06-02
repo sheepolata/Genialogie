@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2xebov7dwsvh"]
+
+[ext_resource type="PackedScene" uid="uid://bx3gwmexgek4v" path="res://scenes/Items/Armors/armor.tscn" id="1_0666p"]
+
+[node name="armor" instance=ExtResource("1_0666p")]
+DEFENCE_BONUS = 1
+_name = "Leather armor"
+STRENGTH = 2
+CONSTITUTION = 3
+STRENGTH_GROWTH = 0.01
+CONSTITUTION_GROWTH = 0.05
+SPEED_GROWTH = 0.025
+metadata/_edit_pinned_properties_ = [&"STRENGTH", &"CONSTITUTION", &"STRENGTH_GROWTH", &"CONSTITUTION_GROWTH", &"SPEED_GROWTH", &"DEFENCE_BONUS"]

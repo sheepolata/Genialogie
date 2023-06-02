@@ -27,5 +27,5 @@ func _process(delta):
 		var dist_factor = ((radius - dist) / radius)
 		var val = base * dist_factor
 		d += Vector2(snappedf(val.x, 0.1), snappedf(val.y, 0.1))
-	character.avoid_direction = -d.normalized() * .25
+	character.avoid_direction = -d.normalized()
 	

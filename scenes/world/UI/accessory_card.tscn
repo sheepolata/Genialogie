@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvc68j6bo0nh6"]
+
+[ext_resource type="PackedScene" uid="uid://dcx2kfussv4bm" path="res://scenes/world/UI/item_card.tscn" id="1_0o0pu"]
+
+[node name="accessory_card" instance=ExtResource("1_0o0pu")]
+
+[node name="BG" parent="." index="0"]
+offset_right = 313.0
+offset_bottom = 212.0
+
+[node name="Level" parent="." index="2"]
+offset_top = 62.0
+offset_bottom = 93.0
+
+[node name="Stats" parent="." index="3"]
+offset_top = 101.0
+offset_bottom = 187.0
+
+[node name="HP" parent="." index="4"]
+offset_top = 112.0
+offset_bottom = 168.0

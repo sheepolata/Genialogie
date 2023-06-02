@@ -1,6 +1,6 @@
 extends Node
 
-class_name MyGlobals
+#class_name MyGlobals
 
 enum ATTACK_TYPE {
 	MELEE,
@@ -12,6 +12,13 @@ enum ABILITY {
 	DEXTERITY,
 	CONSTITUTION,
 	SPEED
+}
+
+var ABILITY_STR_SHORT = {
+	ABILITY.STRENGTH : "STR",
+	ABILITY.DEXTERITY : "DEX",
+	ABILITY.CONSTITUTION : "CON",
+	ABILITY.SPEED : "SPD"
 }
 
 enum TEAM {

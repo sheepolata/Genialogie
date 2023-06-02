@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://v448sh8fvlpg"]
+
+[ext_resource type="PackedScene" uid="uid://dcx2kfussv4bm" path="res://scenes/world/UI/item_card.tscn" id="1_fp4kk"]
+[ext_resource type="Script" path="res://scenes/world/UI/armor_card.gd" id="2_ol2hn"]
+
+[node name="armor_card" instance=ExtResource("1_fp4kk")]
+script = ExtResource("2_ol2hn")
+
+[node name="HP" parent="." index="4"]
+offset_left = 220.0
+offset_top = 62.0
+offset_right = 279.0
+offset_bottom = 118.0
+
+[node name="Defence" type="VBoxContainer" parent="." index="5"]
+layout_mode = 0
+offset_left = 218.0
+offset_top = 122.0
+offset_right = 282.0
+offset_bottom = 178.0
+alignment = 1
+
+[node name="Label" type="Label" parent="Defence" index="0"]
+layout_mode = 2
+text = "Defence"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="Defence" index="1"]
+layout_mode = 2
+text = "+99"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,148 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcx2kfussv4bm"]
+
+[ext_resource type="Script" path="res://scenes/world/UI/item_card.gd" id="1_jd78w"]
+[ext_resource type="Texture2D" uid="uid://cgr1j8m036jvd" path="res://assets/HUD/Inset_Grey.png" id="1_p8c6c"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ifbrv"]
+font_size = 20
+
+[node name="item_card" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jd78w")
+
+[node name="BG" type="NinePatchRect" parent="."]
+modulate = Color(0.0941176, 0.670588, 0.74902, 0.701961)
+layout_mode = 0
+offset_right = 310.0
+offset_bottom = 210.0
+texture = ExtResource("1_p8c6c")
+patch_margin_left = 18
+patch_margin_top = 22
+patch_margin_right = 18
+patch_margin_bottom = 22
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 23.0
+offset_right = 330.0
+offset_bottom = 54.0
+text = "My super awesome item"
+label_settings = SubResource("LabelSettings_ifbrv")
+
+[node name="Level" type="Label" parent="."]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 61.0
+offset_right = 146.0
+offset_bottom = 92.0
+text = "Level 99"
+label_settings = SubResource("LabelSettings_ifbrv")
+
+[node name="Stats" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 97.0
+offset_right = 201.0
+offset_bottom = 183.0
+columns = 4
+
+[node name="STRLabel" type="Label" parent="Stats"]
+layout_mode = 2
+text = "STR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DEXLabel" type="Label" parent="Stats"]
+layout_mode = 2
+text = "DEX
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CONLabel" type="Label" parent="Stats"]
+layout_mode = 2
+text = "CON"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SPDLabel" type="Label" parent="Stats"]
+layout_mode = 2
+text = "SPD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="STRValue" type="Label" parent="Stats"]
+layout_mode = 2
+text = "99
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DEXValue" type="Label" parent="Stats"]
+layout_mode = 2
+text = "99
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CONValue" type="Label" parent="Stats"]
+layout_mode = 2
+text = "99
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SPDValue" type="Label" parent="Stats"]
+layout_mode = 2
+text = "99
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="STRGr" type="Label" parent="Stats"]
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DEXGr" type="Label" parent="Stats"]
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CONGr" type="Label" parent="Stats"]
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SPDGr" type="Label" parent="Stats"]
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HP" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 218.0
+offset_top = 111.0
+offset_right = 277.0
+offset_bottom = 167.0
+alignment = 1
+
+[node name="Label" type="Label" parent="HP"]
+layout_mode = 2
+text = "Max HP"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="HP"]
+layout_mode = 2
+text = "999"
+horizontal_alignment = 1

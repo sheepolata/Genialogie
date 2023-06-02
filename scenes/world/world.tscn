@@ -31,11 +31,19 @@ script = ExtResource("1_le42e")
 
 [node name="villager_char" parent="Team" instance=ExtResource("4_dcocg")]
 position = Vector2(-80, -6)
+scale = Vector2(0.25, 0.25)
 
 [node name="villager_char2" parent="Team" instance=ExtResource("4_dcocg")]
 position = Vector2(95, -2)
+scale = Vector2(0.25, 0.25)
 character_name = "Jane Doe"
 
 [node name="villager_char3" parent="Team" instance=ExtResource("4_dcocg")]
-position = Vector2(-2, 96)
+position = Vector2(40, 92)
+scale = Vector2(0.25, 0.25)
+character_name = "Jack Doe"
+
+[node name="villager_char4" parent="Team" instance=ExtResource("4_dcocg")]
+position = Vector2(-2, 16)
+scale = Vector2(0.25, 0.25)
 character_name = "Jack Doe"

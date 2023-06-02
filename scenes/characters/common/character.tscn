@@ -449,7 +449,6 @@ radius = 100.0
 font_size = 50
 
 [node name="character" type="CharacterBody2D"]
-scale = Vector2(0.25, 0.25)
 script = ExtResource("1_1pe8t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -464,6 +463,8 @@ script = ExtResource("95_6snsr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AvoidArea"]
 shape = SubResource("CircleShape2D_2xt4o")
+
+[node name="Items" type="Node2D" parent="."]
 
 [node name="UIDebug" type="Control" parent="."]
 visible = false

@@ -13,6 +13,10 @@ var growth_range = [-1 , 1]
 @onready var _stats = $stats
 @onready var _class = $class
 
+@onready var _armor = $Items/armor
+@onready var _weapon = $Items/weapon
+@onready var _accessory = $Items/accessory
+
 @onready var _avoid_timer = $Timers/AvoidTimer
 var no_avoid_forced = false
 
@@ -48,6 +52,8 @@ func _ready():
 	current_hp = max_hp()
 	
 	$Timers/ResetAvoidTimer.start()
+	
+	print(_armor)
 
 func call_once():
 	var world_ui_cards = get_parent().get_parent().UICards
@@ -113,38 +119,75 @@ func level_up():
 	current_hp = max_hp()
 
 func max_hp():
-	return _stats.MAX_HP
+	var accessory_bonus = 0 if _accessory == null else (_accessory.max_hp())
+	return _stats.MAX_HP + accessory_bonus
 
 func attack_score():
-	var ability = MyGlobals.ABILITY.STRENGTH # Will be defined by weapon 
+	var ability = _weapon.ATTACK_STAT if _weapon != null else MyGlobals.ABILITY.STRENGTH # Will be defined by weapon
+	var weapon_bonus = 0 if _weapon == null else (_weapon.attack_bonus())
 	return floor(
 		(_class.FLAT_ATTACK_BONUS_PER_LEVEL * _stats.LEVEL)
 		+  ability_score(ability)
+		+ weapon_bonus
 	)
 
 func damage_score():
-	var ability = MyGlobals.ABILITY.STRENGTH # Will be defined by weapon 
+	var ability = _weapon.DAMAGE_STAT if _weapon != null else MyGlobals.ABILITY.STRENGTH # Will be defined by weapon
+	var weapon_bonus = 0 if _weapon == null else (_weapon.damage_bonus())
 	return max(0, floor(
 		(_class.FLAT_DAMAGE_BONUS_PER_LEVEL * _stats.LEVEL)
 		+  ability_score(ability)
+		+ weapon_bonus
 	))
 	
 func defence_score():
 	var dex = ability_score(MyGlobals.ABILITY.DEXTERITY)
 	var spd = ability_score(MyGlobals.ABILITY.SPEED)
-	return max(0, floor(10 + (_class.FLAT_DEFENCE_BONUS_PER_LEVEL * _stats.LEVEL) + floor(dex + (spd / 2))))
+	var armor_bonus = 0 if _armor == null else (_armor.defence_bonus())
+	return max(0, 
+			floor(10 + (_class.FLAT_DEFENCE_BONUS_PER_LEVEL * _stats.LEVEL) + floor(dex + (spd / 2)))
+			+ armor_bonus
+		)
 
 func strength():
-	return _stats.abilities[MyGlobals.ABILITY.STRENGTH]
+	var accessory_bonus = 0 if _accessory == null else (_accessory.strength())
+	var armor_bonus = 0 if _armor == null else (_armor.strength())
+	var weapon_bonus = 0 if _weapon == null else (_weapon.strength())
+	return (_stats.abilities[MyGlobals.ABILITY.STRENGTH]
+			+ accessory_bonus
+			+ armor_bonus
+			+ weapon_bonus
+		)
 
 func dexterity():
-	return _stats.abilities[MyGlobals.ABILITY.DEXTERITY]
+	var accessory_bonus = 0 if _accessory == null else (_accessory.dexterity())
+	var armor_bonus = 0 if _armor == null else (_armor.dexterity())
+	var weapon_bonus = 0 if _weapon == null else (_weapon.dexterity())
+	return (_stats.abilities[MyGlobals.ABILITY.DEXTERITY]
+			+ accessory_bonus
+			+ armor_bonus
+			+ weapon_bonus
+		)
 	
 func constitution():
-	return _stats.abilities[MyGlobals.ABILITY.CONSTITUTION]
+	var accessory_bonus = 0 if _accessory == null else (_accessory.constitution())
+	var armor_bonus = 0 if _armor == null else (_armor.constitution())
+	var weapon_bonus = 0 if _weapon == null else (_weapon.constitution())
+	return (_stats.abilities[MyGlobals.ABILITY.CONSTITUTION]
+			+ accessory_bonus
+			+ armor_bonus
+			+ weapon_bonus
+		)
 	
 func speed():
-	return _stats.abilities[MyGlobals.ABILITY.SPEED]
+	var accessory_bonus = 0 if _accessory == null else (_accessory.speed())
+	var armor_bonus = 0 if _armor == null else (_armor.speed())
+	var weapon_bonus = 0 if _weapon == null else (_weapon.speed())
+	return (_stats.abilities[MyGlobals.ABILITY.SPEED]
+			+ accessory_bonus
+			+ armor_bonus
+			+ weapon_bonus
+		)
 
 func ability_score(ab):
 	return _stats.ability_score(ab)
@@ -153,34 +196,59 @@ func growth_diminishing_return():
 	return max(0, ((_stats.LEVEL - 20)) * 0.01)
 
 func strength_growth():
+	var accessory_bonus = 0 if _accessory == null else (_accessory.strength_growth())
+	var armor_bonus = 0 if _armor == null else (_armor.strength_growth())
+	var weapon_bonus = 0 if _weapon == null else (_weapon.strength_growth())
 	return clamp(
 		_stats.STRENGTH_GROWTH
 		+ _class.STRENGTH_GROWTH
 		- growth_diminishing_return()
+		+ accessory_bonus
+		+ armor_bonus
+		+ weapon_bonus
 		, growth_range[0], growth_range[1]
 	)
 
 func dexterity_growth():
+	var accessory_bonus = 0 if _accessory == null else (_accessory.dexterity_growth())
+	var armor_bonus = 0 if _armor == null else (_armor.dexterity_growth())
+	var weapon_bonus = 0 if _weapon == null else (_weapon.dexterity_growth())
 	return clamp(
 		_stats.DEXTERITY_GROWTH
 		+ _class.DEXTERITY_GROWTH
 		- growth_diminishing_return()
+		+ accessory_bonus
+		+ armor_bonus
+		+ weapon_bonus
 		, growth_range[0], growth_range[1]
 	)
 
+
 func constitution_growth():
+	var accessory_bonus = 0 if _accessory == null else (_accessory.constitution_growth())
+	var armor_bonus = 0 if _armor == null else (_armor.constitution_growth())
+	var weapon_bonus = 0 if _weapon == null else (_weapon.constitution_growth())
 	return clamp(
 		_stats.CONSTITUTION_GROWTH
 		+ _class.CONSTITUTION_GROWTH
 		- growth_diminishing_return()
+		+ accessory_bonus
+		+ armor_bonus
+		+ weapon_bonus
 		, growth_range[0], growth_range[1]
 	)
 
 func speed_growth():
+	var accessory_bonus = 0 if _accessory == null else (_accessory.speed_growth())
+	var armor_bonus = 0 if _armor == null else (_armor.speed_growth())
+	var weapon_bonus = 0 if _weapon == null else (_weapon.speed_growth())
 	return clamp(
 		_stats.SPEED_GROWTH
 		+ _class.SPEED_GROWTH
 		- growth_diminishing_return()
+		+ accessory_bonus
+		+ armor_bonus
+		+ weapon_bonus
 		, growth_range[0], growth_range[1]
 	)
 
@@ -198,7 +266,10 @@ func go_to_position():
 		goal_reached = true
 	else:
 		var direction = (goal - position).normalized()
-		velocity = (direction + avoid_direction).normalized() * _stats.walking_speed()
+		velocity = (
+				direction.normalized() * _stats.walking_speed()
+				+ avoid_direction * (_stats.walking_speed() * .125)
+			)
 
 func avoid():
 #	velocity = avoid_direction * _stats.walking_speed()
@@ -210,7 +281,7 @@ func avoid():
 	
 	if avoid_direction != Vector2.ZERO:
 #		print(avoid_direction)
-		velocity = avoid_direction * _stats.walking_speed()
+		velocity = avoid_direction * (_stats.walking_speed() * .125)
 		state = STATE.avoid_only
 		if _avoid_timer.is_stopped():
 			_avoid_timer.start()

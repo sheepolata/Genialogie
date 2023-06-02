@@ -4,13 +4,19 @@ extends Node2D
 @export_group("Main stats")
 var stat_baseline : int = 20
 var stat_range = [0, 40]
-@export var LEVEL : int = 1
-@export var MAX_HP : int = 1
-@export var STRENGTH : int = stat_baseline : set = set_STRENGTH
-@export var DEXTERITY : int = stat_baseline : set = set_DEXTERITY
-@export var CONSTITUTION : int = stat_baseline : set = set_CONSTITUTION
-@export var SPEED : int = stat_baseline : set = set_SPEED
+var LEVEL : int = 1
+var MAX_HP : int = 1
+var STRENGTH : int = stat_baseline : set = set_STRENGTH
+var DEXTERITY : int = stat_baseline : set = set_DEXTERITY
+var CONSTITUTION : int = stat_baseline : set = set_CONSTITUTION
+var SPEED : int = stat_baseline : set = set_SPEED
 @export var BASE_WALKING_SPEED : int = 300
+
+@export_group("Growth stats")
+@export_range(0, 1) var STRENGTH_GROWTH : float = 0.3
+@export_range(0, 1) var DEXTERITY_GROWTH : float = 0.3
+@export_range(0, 1) var CONSTITUTION_GROWTH : float = 0.3
+@export_range(0, 1) var SPEED_GROWTH : float = 0.3
 
 var abilities = {
 	MyGlobals.ABILITY.STRENGTH : STRENGTH,

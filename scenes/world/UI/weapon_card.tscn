@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3udtwudjk35w"]
+
+[ext_resource type="PackedScene" uid="uid://dcx2kfussv4bm" path="res://scenes/world/UI/item_card.tscn" id="1_5fqym"]
+[ext_resource type="Script" path="res://scenes/world/UI/weapon_card.gd" id="2_rty6f"]
+
+[node name="weapon_card" instance=ExtResource("1_5fqym")]
+script = ExtResource("2_rty6f")
+
+[node name="BG" parent="." index="0"]
+offset_right = 418.0
+offset_bottom = 240.0
+
+[node name="Name" parent="." index="1"]
+offset_left = 21.0
+offset_top = 22.0
+offset_right = 329.0
+offset_bottom = 53.0
+text = "My super awesome weapon"
+
+[node name="Level" parent="." index="2"]
+offset_left = 20.0
+offset_top = 64.0
+offset_right = 141.0
+offset_bottom = 95.0
+
+[node name="Stats" parent="." index="3"]
+offset_left = 27.0
+offset_top = 119.0
+offset_right = 207.0
+offset_bottom = 205.0
+
+[node name="GridContainer" type="GridContainer" parent="." index="4"]
+layout_mode = 0
+offset_left = 247.0
+offset_top = 118.0
+offset_right = 385.0
+offset_bottom = 204.0
+columns = 2
+
+[node name="AttackLabel" type="Label" parent="GridContainer" index="0"]
+layout_mode = 2
+text = "Attack"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DamageLabel" type="Label" parent="GridContainer" index="1"]
+layout_mode = 2
+text = "Damage"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AttackScore" type="Label" parent="GridContainer" index="2"]
+layout_mode = 2
+text = "+99"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DamageScore" type="Label" parent="GridContainer" index="3"]
+layout_mode = 2
+text = "+99"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AttackStat" type="Label" parent="GridContainer" index="4"]
+layout_mode = 2
+text = "with STR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DamageStat" type="Label" parent="GridContainer" index="5"]
+layout_mode = 2
+text = "with STR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HP" parent="." index="5"]
+offset_left = 283.0
+offset_top = 57.0
+offset_right = 342.0
+offset_bottom = 113.0

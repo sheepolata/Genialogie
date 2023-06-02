@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://duxg7mcwc5g45"]
+
+[ext_resource type="PackedScene" uid="uid://dy3w3a588mg8q" path="res://scenes/Items/Weapons/weapon.tscn" id="1_d5d6s"]
+
+[node name="weapon" instance=ExtResource("1_d5d6s")]
+ATTACK_BONUS = 3
+_name = "Wooden Sword"
+DEXTERITY = 1
+SPEED = 2
+DEXTERITY_GROWTH = 0.05
+SPEED_GROWTH = 0.01
+metadata/_edit_pinned_properties_ = [&"ATTACK_BONUS", &"_name", &"DEXTERITY", &"SPEED", &"DEXTERITY_GROWTH", &"SPEED_GROWTH"]
